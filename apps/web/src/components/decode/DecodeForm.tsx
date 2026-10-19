@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { DiagnosticReport } from "@/lib/types";
+import Button from "@/components/shared/Button";
 
 interface DecodeFormProps {
   onDecode: (report: DiagnosticReport | null) => void;
@@ -202,16 +203,20 @@ export default function DecodeForm({ onDecode }: DecodeFormProps) {
         🔎 Decode Error Code
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4" aria-label="Decode Soroban error code">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+            <label
+              htmlFor="error-category"
+              className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2"
+            >
               Error Category
             </label>
             <select
+              id="error-category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-200 focus:outline-none focus:border-violet-500 transition-colors"
+              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition-colors"
             >
               <option value="contract">Contract (HostError::Contract)</option>
               <option value="budget">Budget (HostError::Budget)</option>
@@ -223,28 +228,33 @@ export default function DecodeForm({ onDecode }: DecodeFormProps) {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+            <label
+              htmlFor="error-code"
+              className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2"
+            >
               Error Code (Numeric)
             </label>
             <input
+              id="error-code"
               type="number"
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="e.g. 1"
               min="0"
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-violet-500 transition-colors"
+              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition-colors"
             />
           </div>
         </div>
 
         <div className="flex justify-end pt-2">
-          <button
+          <Button
             type="submit"
-            disabled={isLoading}
-            className="bg-violet-600 hover:bg-violet-500 text-white font-medium px-6 py-2.5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed"
+            variant="primary"
+            size="md"
+            loading={isLoading}
           >
-            {isLoading ? "Decoding..." : "Diagnose Error"}
-          </button>
+            {isLoading ? "Decoding…" : "Diagnose Error"}
+          </Button>
         </div>
       </form>
     </div>

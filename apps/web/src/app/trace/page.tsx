@@ -6,6 +6,7 @@ import { ExecutionTimeline } from "@/components/trace/ExecutionTimeline";
 import { StateDiffViewer } from "@/components/trace/StateDiffViewer";
 import { ResourceProfile } from "@/components/trace/ResourceProfile";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import Button from "@/components/shared/Button";
 
 export default function TracePage() {
   const [txHash, setTxHash] = useState("");
@@ -61,13 +62,15 @@ export default function TracePage() {
           </select>
         </div>
 
-        <button
+        <Button
           type="submit"
+          variant="primary"
+          size="md"
           disabled={loading || !txHash}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          loading={loading}
         >
-          {loading ? "Tracing..." : "Trace Transaction"}
-        </button>
+          {loading ? "Tracing…" : "Trace Transaction"}
+        </Button>
 
         {streaming && (
           <div className="text-sm text-green-600">
